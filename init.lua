@@ -67,18 +67,45 @@ vim.opt.rtp:prepend(lazypath)
 --  You can also configure plugins after the setup call,
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
-  -- NOTE: First, some plugins that don't require any configuration
 
-  -- Going faaaaast
+  -- Leap: Going faaaaast
   'ggandor/leap.nvim',
+
+
+
+
+
+
+  -- Markdown preview
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function() vim.fn["mkdp#util#install"]() end,
+  },
+
+
+
+
+
 
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'tpope/vim-repeat',
 
+
+
+
+
+
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+
+
+
+
+
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -99,6 +126,11 @@ require('lazy').setup({
     },
   },
 
+
+
+
+
+
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -115,11 +147,21 @@ require('lazy').setup({
     },
   },
 
+
+
+
+
+
   -- Useful plugin to show you pending keybinds.
   {
     'folke/which-key.nvim',
     opts = {}
   },
+
+
+
+
+
 
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
@@ -160,7 +202,12 @@ require('lazy').setup({
     },
   },
 
---[[
+
+
+
+
+
+  --[[
   {
     -- Theme inspired by Atom
     'navarasu/onedark.nvim',
@@ -169,14 +216,24 @@ require('lazy').setup({
       vim.cmd.colorscheme 'onedark'
     end,
   },
-]]--
+]] --
+
+
+
+
+
 
   {
-  -- Catppuccin Theme
+    -- Catppuccin Theme
     'catppuccin/nvim',
     name = "catppuccin",
     priority = 1000,
   },
+
+
+
+
+
 
   {
     -- Set lualine as statusline
@@ -185,13 +242,18 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = true,
---      theme = 'onedark',
+        --      theme = 'onedark',
         theme = 'catppuccin',
         component_separators = ' ',
-        section_separators = {left = '', right = ''},
+        section_separators = { left = '', right = '' },
       },
     },
   },
+
+
+
+
+
 
   {
     -- Add indentation guides even on blank lines
@@ -202,11 +264,26 @@ require('lazy').setup({
     opts = {},
   },
 
+
+
+
+
+
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',       opts = {} },
+
+
+
+
+
 
   -- Folder icons for telescope file browser
   { 'nvim-tree/nvim-web-devicons', },
+
+
+
+
+
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -239,11 +316,21 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
 
+
+
+
+
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.autoformat',
+  --  require 'kickstart.plugins.debug',
+
+
+
+
+
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
@@ -253,6 +340,11 @@ require('lazy').setup({
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
 }, {})
+
+
+
+
+
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -298,6 +390,11 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+
+
+
+
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -314,8 +411,11 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
--- [[ Add default mapping for leap plugin ]]
-require('leap').add_default_mappings()
+
+
+
+
+
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -328,101 +428,238 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+
+
+
+
+
+-- [[ Add default mapping for leap plugin ]]
+require('leap').add_default_mappings()
+
+
+
+
+
 -- [[ catppuccin setup
 require("catppuccin").setup({
-    flavour = "latte", -- latte, frappe, macchiato, mocha
-    background = { -- :h background
-        light = "latte",
-        dark = "mocha",
+  flavour = "latte", -- latte, frappe, macchiato, mocha
+  background = {     -- :h background
+    light = "latte",
+    dark = "mocha",
+  },
+  transparent_background = false, -- disables setting the background color.
+  show_end_of_buffer = false,     -- shows the '~' characters after the end of buffers
+  term_colors = false,            -- sets terminal colors (e.g. `g:terminal_color_0`)
+  dim_inactive = {
+    enabled = true,               -- dims the background color of inactive window
+    shade = "dark",
+    percentage = 0.15,            -- percentage of the shade to apply to the inactive window
+  },
+  no_italic = false,              -- Force no italic
+  no_bold = false,                -- Force no bold
+  no_underline = false,           -- Force no underline
+  styles = {                      -- Handles the styles of general hi groups (see `:h highlight-args`):
+    comments = { "italic" },      -- Change the style of comments
+    conditionals = { "italic" },
+    loops = {},
+    functions = {},
+    keywords = {},
+    strings = {},
+    variables = {},
+    numbers = {},
+    booleans = {},
+    properties = {},
+    types = {},
+    operators = {},
+  },
+  color_overrides = {},
+  custom_highlights = {},
+  integrations = {
+    cmp = true,
+    gitsigns = true,
+    nvimtree = true,
+    treesitter = true,
+    notify = false,
+    mini = {
+      enabled = true,
+      indentscope_color = "",
     },
-    transparent_background = false, -- disables setting the background color.
-    show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
-    term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
-    dim_inactive = {
-        enabled = true, -- dims the background color of inactive window
-        shade = "dark",
-        percentage = 0.15, -- percentage of the shade to apply to the inactive window
-    },
-    no_italic = false, -- Force no italic
-    no_bold = false, -- Force no bold
-    no_underline = false, -- Force no underline
-    styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-        comments = { "italic" }, -- Change the style of comments
-        conditionals = { "italic" },
-        loops = {},
-        functions = {},
-        keywords = {},
-        strings = {},
-        variables = {},
-        numbers = {},
-        booleans = {},
-        properties = {},
-        types = {},
-        operators = {},
-    },
-    color_overrides = {},
-    custom_highlights = {},
-    integrations = {
-        cmp = true,
-        gitsigns = true,
-        nvimtree = true,
-        treesitter = true,
-        notify = false,
-        mini = {
-            enabled = true,
-            indentscope_color = "",
-        },
-        leap = true,
-        telescope = true,
-        -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
-    },
+    leap = true,
+    telescope = true,
+    -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+  },
 })
 -- setup must be called before loading
 vim.cmd.colorscheme "catppuccin"
 -- ]] cattpuccin setup
 
-require'nvim-web-devicons'.setup {
- -- your personnal icons can go here (to override)
- -- you can specify color or cterm_color instead of specifying both of them
- -- DevIcon will be appended to `name`
- override = {
-  zsh = {
-    icon = "",
-    color = "#428850",
-    cterm_color = "65",
-    name = "Zsh"
-  }
- };
- -- globally enable different highlight colors per icon (default to true)
- -- if set to false all icons will have the default icon's color
- color_icons = true;
- -- globally enable default icons (default to false)
- -- will get overriden by `get_icons` option
- default = true;
- -- globally enable "strict" selection of icons - icon will be looked up in
- -- different tables, first by filename, and if not found by extension; this
- -- prevents cases when file doesn't have any extension but still gets some icon
- -- because its name happened to match some extension (default to false)
- strict = true;
- -- same as `override` but specifically for overrides by filename
- -- takes effect when `strict` is true
- override_by_filename = {
-  [".gitignore"] = {
-    icon = "",
-    color = "#f1502f",
-    name = "Gitignore"
-  }
- };
- -- same as `override` but specifically for overrides by extension
- -- takes effect when `strict` is true
- override_by_extension = {
-  ["log"] = {
-    icon = "",
-    color = "#81e043",
-    name = "Log"
-  }
- };
+
+
+
+
+-- set to 1, nvim will open the preview window after entering the Markdown buffer
+-- default: 0
+-- vim.g.mkdp_auto_start = 0
+
+-- set to 1, the nvim will auto close current preview window when changing
+-- from Markdown buffer to another buffer
+-- default: 1
+-- vim.g.mkdp_auto_close = 1
+
+-- set to 1, Vim will refresh Markdown when saving the buffer or
+-- when leaving insert mode. Default 0 is auto-refresh Markdown as you edit or
+-- move the cursor
+-- default: 0
+-- vim.g.mkdp_refresh_slow = 0
+
+-- set to 1, the MarkdownPreview command can be used for all files,
+-- by default it can be use in Markdown files only
+-- default: 0
+-- vim.g.mkdp_command_for_global = 0
+
+-- set to 1, the preview server is available to others in your network.
+-- By default, the server listens on localhost (127.0.0.1)
+-- default: 0
+-- vim.g.mkdp_open_to_the_world = 0
+
+-- use custom IP to open preview page.
+-- Useful when you work in remote Vim and preview on local browser.
+-- For more details see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+-- default empty
+-- vim.g.mkdp_open_ip = ''
+
+-- specify browser to open preview page
+-- for path with space
+-- valid: `/path/with\ space/xxx`
+-- invalid: `/path/with\\ space/xxx`
+-- default: ''
+-- vim.g.mkdp_browser = ''
+
+-- set to 1, echo preview page URL in command line when opening preview page
+-- default is 0
+-- vim.g.mkdp_echo_preview_url = 0
+
+-- a custom Vim function name to open preview page
+-- this function will receive URL as param
+-- default is empty
+-- vim.g.mkdp_browserfunc = ''
+
+-- options for Markdown rendering
+-- mkit: markdown-it options for rendering
+-- katex: KaTeX options for math
+-- uml: markdown-it-plantuml options
+-- maid: mermaid options
+-- disable_sync_scroll: whether to disable sync scroll, default 0
+-- sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+--   middle: means the cursor position is always at the middle of the preview page
+--   top: means the Vim top viewport always shows up at the top of the preview page
+--   relative: means the cursor position is always at relative positon of the preview page
+-- hide_yaml_meta: whether to hide YAML metadata, default is 1
+-- sequence_diagrams: js-sequence-diagrams options
+-- content_editable: if enable content editable for preview page, default: v:false
+-- disable_filename: if disable filename header for preview page, default: 0
+-- vim.g.mkdp_preview_options = {
+-- 'mkit': {},
+-- 'katex': {},
+-- 'uml': {},
+-- 'maid': {},
+-- 'disable_sync_scroll': 0,
+-- 'sync_scroll_type': 'middle',
+-- 'hide_yaml_meta': 1,
+-- 'sequence_diagrams': {},
+-- 'flowchart_diagrams': {},
+-- 'content_editable': v:false,
+-- 'disable_filename': 0,
+-- 'toc': {}
+--     }
+
+-- use a custom Markdown style. Must be an absolute path
+-- like '/Users/username/markdown.css' or expand('~/markdown.css')
+-- vim.g.mkdp_markdown_css = ''
+
+-- use a custom highlight style. Must be an absolute path
+-- like '/Users/username/highlight.css' or expand('~/highlight.css')
+-- vim.g.mkdp_highlight_css = ''
+
+-- use a custom port to start server or empty for random
+-- vim.g.mkdp_port = ''
+
+-- preview page title
+-- ${name} will be replace with the file name
+-- vim.g.mkdp_page_title = '「${name}」'
+
+-- use a custom location for images
+-- vim.g.mkdp_images_path = /home/user/.markdown_images
+
+-- recognized filetypes
+-- these filetypes will have MarkdownPreview... commands
+-- vim.g.mkdp_filetypes = ['markdown']
+
+-- set default theme (dark or light)
+-- By default the theme is defined according to the preferences of the system
+-- vim.g.mkdp_theme = 'dark'
+
+-- combine preview window
+-- default: 0
+-- if enable it will reuse previous opened preview window when you preview markdown file.
+-- ensure to set vim.g.mkdp_auto_close = 0 if you have enable this option
+-- vim.g.mkdp_combine_preview = 0
+
+-- auto refetch combine preview contents when change markdown buffer
+-- only when g:mkdp_combine_preview is 1
+-- vim.g.mkdp_combine_preview_auto_refresh = 1
+
+
+
+
+
+require 'nvim-web-devicons'.setup {
+  -- your personnal icons can go here (to override)
+  -- you can specify color or cterm_color instead of specifying both of them
+  -- DevIcon will be appended to `name`
+  override = {
+    zsh = {
+      icon = "",
+      color = "#428850",
+      cterm_color = "65",
+      name = "Zsh"
+    }
+  },
+  -- globally enable different highlight colors per icon (default to true)
+  -- if set to false all icons will have the default icon's color
+  color_icons = true,
+  -- globally enable default icons (default to false)
+  -- will get overriden by `get_icons` option
+  default = true,
+  -- globally enable "strict" selection of icons - icon will be looked up in
+  -- different tables, first by filename, and if not found by extension; this
+  -- prevents cases when file doesn't have any extension but still gets some icon
+  -- because its name happened to match some extension (default to false)
+  strict = true,
+  -- same as `override` but specifically for overrides by filename
+  -- takes effect when `strict` is true
+  override_by_filename = {
+    [".gitignore"] = {
+      icon = "",
+      color = "#f1502f",
+      name = "Gitignore"
+    }
+  },
+  -- same as `override` but specifically for overrides by extension
+  -- takes effect when `strict` is true
+  override_by_extension = {
+    ["log"] = {
+      icon = "",
+      color = "#81e043",
+      name = "Log"
+    }
+  },
 }
+
+
+
+
+
 
 -- open file_browser with the path of the current buffer
 vim.api.nvim_set_keymap(
@@ -431,6 +668,11 @@ vim.api.nvim_set_keymap(
   ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
   { noremap = true }
 )
+
+
+
+
+
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -507,6 +749,11 @@ vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by 
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
+
+
+
+
+
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
@@ -575,6 +822,11 @@ vim.defer_fn(function()
     },
   }
 end, 0)
+
+
+
+
+
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
@@ -686,6 +938,11 @@ mason_lspconfig.setup_handlers {
   end,
 }
 
+
+
+
+
+
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local cmp = require 'cmp'
@@ -736,6 +993,11 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+
+
+
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
