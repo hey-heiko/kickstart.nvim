@@ -356,6 +356,15 @@ vim.o.relativenumber = true
 -- Set highlight on search
 vim.o.hlsearch = false
 
+-- Set tabstop
+vim.o.tabstop = 4
+
+-- Set softtabstop
+vim.o.softtabstop = 4
+
+-- Set shiftwidth
+vim.o.shiftwidth = 4
+
 -- Make line numbers default
 vim.wo.number = true
 
