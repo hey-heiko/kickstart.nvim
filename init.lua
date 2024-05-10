@@ -304,9 +304,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- [[ Add default mapping for leap plugin ]]
 require('leap').add_default_mappings()
-
-
-
+-- require('leap').opts.setup({
+-- case_sensitive = false
+--
+--
+-- }
 
 -- [[ catppuccin setup
 require("catppuccin").setup({
@@ -367,7 +369,7 @@ vim.cmd.colorscheme "catppuccin"
 
 -- set to 1, nvim will open the preview window after entering the Markdown buffer
 -- default: 0
--- vim.g.mkdp_auto_start = 0
+vim.g.mkdp_auto_start = 1
 
 -- set to 1, the nvim will auto close current preview window when changing
 -- from Markdown buffer to another buffer
@@ -383,7 +385,7 @@ vim.cmd.colorscheme "catppuccin"
 -- set to 1, the MarkdownPreview command can be used for all files,
 -- by default it can be use in Markdown files only
 -- default: 0
--- vim.g.mkdp_command_for_global = 0
+vim.g.mkdp_command_for_global = 1
 
 -- set to 1, the preview server is available to others in your network.
 -- By default, the server listens on localhost (127.0.0.1)
