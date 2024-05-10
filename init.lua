@@ -1,43 +1,5 @@
---[[
-
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-
-  And then you can explore or search through `:help lua-guide`
-  - https://neovim.io/doc/user/lua-guide.html
-
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
---]]
-
+-- Heikos NeoVIM Config
+--
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -63,9 +25,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure plugins ]]
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
 --  You can also configure plugins after the setup call,
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
@@ -73,10 +32,28 @@ require('lazy').setup({
   -- Leap: Going faaaaast
   'ggandor/leap.nvim',
 
+  -- Git related plugins
+  'tpope/vim-fugitive',
+  'tpope/vim-rhubarb',
+  'tpope/vim-repeat',
 
+  -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-sleuth',
 
+  -- Useful plugin to show you pending keybinds.
+  { 'folke/which-key.nvim',                opts = {} },
 
+  -- Catppuccin Theme
+  { "catppuccin/nvim",                     name = "catppuccin", priority = 1000 },
 
+  -- Add indentation guides even on blank lines
+  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl',        opts = {}, },
+
+  -- "gc" to comment visual regions/lines
+  { 'numToStr/Comment.nvim',               opts = {} },
+
+  -- Folder icons for telescope file browser
+  'nvim-tree/nvim-web-devicons',
 
   -- Markdown preview
   {
@@ -86,28 +63,14 @@ require('lazy').setup({
     build = function() vim.fn["mkdp#util#install"]() end,
   },
 
-
-
-
-
-
-  -- Git related plugins
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
-  'tpope/vim-repeat',
-
-
-
-
-
-
-  -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
-
-
-
-
-
+  {
+    -- Highlight, edit, and navigate code
+    'nvim-treesitter/nvim-treesitter',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
+    build = ':TSUpdate',
+  },
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -128,11 +91,6 @@ require('lazy').setup({
     },
   },
 
-
-
-
-
-
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -148,22 +106,6 @@ require('lazy').setup({
       'rafamadriz/friendly-snippets',
     },
   },
-
-
-
-
-
-
-  -- Useful plugin to show you pending keybinds.
-  {
-    'folke/which-key.nvim',
-    opts = {}
-  },
-
-
-
-
-
 
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
@@ -204,39 +146,6 @@ require('lazy').setup({
     },
   },
 
-
-
-
-
-
-  --[[
-  {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'onedark'
-    end,
-  },
-]] --
-
-
-
-
-
-
-  {
-    -- Catppuccin Theme
-    'catppuccin/nvim',
-    name = "catppuccin",
-    priority = 1000,
-  },
-
-
-
-
-
-
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -252,45 +161,9 @@ require('lazy').setup({
     },
   },
 
-
-
-
-
-
-  {
-    -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help ibl`
-    main = 'ibl',
-    opts = {},
-  },
-
-
-
-
-
-
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',       opts = {} },
-
-
-
-
-
-
-  -- Folder icons for telescope file browser
-  { 'nvim-tree/nvim-web-devicons', },
-
-
-
-
-
-
   -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
     dependencies = {
       'nvim-lua/plenary.nvim',
       -- Fuzzy Finder Algorithm which requires local dependencies to be built.
@@ -309,30 +182,12 @@ require('lazy').setup({
     },
   },
 
-  {
-    -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
-    build = ':TSUpdate',
-  },
-
-
-
-
-
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
   require 'kickstart.plugins.autoformat',
-  --  require 'kickstart.plugins.debug',
-
-
-
-
-
+  -- require 'kickstart.plugins.debug',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
@@ -351,6 +206,9 @@ require('lazy').setup({
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
+
+-- Number off lines still shown on border before scrolling starts
+vim.o.scrolloff = 15
 
 -- Enable relativenumber for line numbers
 vim.o.relativenumber = true
@@ -450,7 +308,6 @@ require('leap').add_default_mappings()
 
 
 
-
 -- [[ catppuccin setup
 require("catppuccin").setup({
   flavour = "latte", -- latte, frappe, macchiato, mocha
@@ -464,7 +321,7 @@ require("catppuccin").setup({
   dim_inactive = {
     enabled = true,               -- dims the background color of inactive window
     shade = "dark",
-    percentage = 0.15,            -- percentage of the shade to apply to the inactive window
+    percentage = 0.5,             -- percentage of the shade to apply to the inactive window
   },
   no_italic = false,              -- Force no italic
   no_bold = false,                -- Force no bold
