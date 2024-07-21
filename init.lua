@@ -718,7 +718,7 @@ require('lazy').setup({
 
     config = function()
       require('catppuccin').setup {
-        flavour = 'latte', -- latte, frappe, macchiato, mocha
+        flavour = 'frappe', -- latte, frappe, macchiato, mocha
         background = { -- :h background
           light = 'latte',
           dark = 'mocha',
