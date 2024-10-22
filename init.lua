@@ -7,7 +7,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set the language of all the hints to english
-vim.api.nvim_command 'language en_US'
+-- vim.api.nvim_command 'language en_US'
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
